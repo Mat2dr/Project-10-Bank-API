@@ -4,6 +4,7 @@ import agentBankLogo from '../../img/argentBankLogo.png'
 
 
 const Header = () => {
+
   return (
     <div>
         <nav className="main-nav">
@@ -14,6 +15,11 @@ const Header = () => {
         <div>
           <Link className="main-nav-item" to='/Login'>
             <i className="fa fa-user-circle"></i>Sign In
+          </Link>
+          <Link className="main-nav-item" to='/' onClick={() => {
+            localStorage.removeItem('userInfo');
+          }}>
+            <i className="fa fa-user-circle"></i>Sign Out
           </Link>
         </div>
         </nav>

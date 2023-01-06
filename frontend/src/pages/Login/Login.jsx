@@ -1,48 +1,40 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useEffect } from 'react-router-dom'
+import ErrorMessage from '../../components/ErrorMessage';
 import axios from 'axios';
 
 const Login = () => {
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(username,password);
+    console.log(email,password);
 
     try {
+      setError("");
       const config = {
         headers: {
           "Content-type":"application/json"
         }
       };
-      //setLoading(true);
       const { data } = await axios.post(
         'http://localhost:3001/api/v1/user/login', 
         {
-          username,
+          email,
           password
         }, 
         config
       );
       console.log(data);
-      //localStorage.setItem('userInfo', JSON.stringify(data))
-
-      //setLoading(false);
+      localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);
     }
   };
-  
-
-
-
-
-
 
 
   return (
@@ -53,12 +45,13 @@ const Login = () => {
         <form onSubmit={submitHandler}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
-            <input value={username} type="text" id="username" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
+            <input value={email} type="text" id="username" placeholder='Username' onChange={(e) => setEmail(e.target.value)}/>
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
             <input value={password} type="password" id="password" onChange={(e) => setPassword(e.target.value)}/>
           </div>
+          { error && <ErrorMessage>{ error }</ErrorMessage> }
           <div className="input-remember">
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
