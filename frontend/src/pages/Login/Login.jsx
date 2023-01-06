@@ -1,39 +1,31 @@
-import React, { useState } from 'react'
-import { Link, useEffect } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate  } from 'react-router-dom'
 import ErrorMessage from '../../components/ErrorMessage';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/userActions';
 
 const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, userInfo} = userLogin
+
+  useEffect(() => {
+    if(userInfo) {
+      navigate('/Dashboard');
+    }
+  }, [userInfo])
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(email,password);
 
-    try {
-      setError("");
-      const config = {
-        headers: {
-          "Content-type":"application/json"
-        }
-      };
-      const { data } = await axios.post(
-        'http://localhost:3001/api/v1/user/login', 
-        {
-          email,
-          password
-        }, 
-        config
-      );
-      console.log(data);
-      localStorage.setItem('userInfo', JSON.stringify(data))
-    } catch (error) {
-      console.log(error);
-      setError(error.response.data.message);
-    }
+    dispatch(login(email,password))
+    console.log(email,password);
   };
 
 
