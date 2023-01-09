@@ -1,18 +1,8 @@
-import React, {useEffect} from 'react'
-import { useSelector } from 'react-redux';
-import { useNavigate  } from 'react-router-dom'
+//import React, {useEffect} from 'react'
+//import { useSelector } from 'react-redux';
+// import { useNavigate  } from 'react-router-dom'
 
 const Dashboard = () => {
-  let navigate = useNavigate();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const {userInfo} = userLogin;
-
-  useEffect(() => {
-    if(!userInfo) {
-      navigate('/');
-    }
-  }, [userInfo])
 
   return (
     <main className="main bg-dark">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate  } from 'react-router-dom'
-import ErrorMessage from '../../components/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../slices/authSlice';
 
@@ -10,20 +9,21 @@ const Login = () => {
   const auth =useSelector((state) => state.auth);
   console.log(auth);
 
-  useEffect(() => {
-    if(auth._id) {
-      navigate("/Dasboard")
-    }
-  }, [auth._id, navigate]);
-
-   const [user, setUser] = useState({
+  const [user, setUser] = useState({
     email: '',
     password: '',
    });
 
-  const submitHandler = async (e) => {
+   useEffect(() => {
+    if(auth._id) {
+      navigate("/Dashboard")
+    }
+  }, [auth._id, navigate]); 
+
+  const submitHandler = (e) => {
     e.preventDefault();
 
+    console.log(user);
     dispatch(loginUser(user));
   }; 
 
@@ -35,8 +35,8 @@ const Login = () => {
         <h1>Sign In</h1>
         <form onSubmit={submitHandler}>
           <div className="input-wrapper">
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" placeholder='Username' onChange={ (e) => setUser({ ...user, email:e.target.value }) }/>
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" placeholder='email' onChange={ (e) => setUser({ ...user, email:e.target.value }) }/>
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
@@ -46,10 +46,7 @@ const Login = () => {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button type='submit' className="sign-in-button">
-            { auth.loginStatus === "pending" ? "Submitting" : "Sign In"}
-          </button>
-          {auth.loginStatus === 'rejected' ? (<p>{auth.loginError}</p>) : null }
+          <button type='submit' className="sign-in-button">Sign In</button>
         </form>
       </section>
     </main>

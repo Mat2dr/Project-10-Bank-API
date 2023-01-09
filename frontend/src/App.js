@@ -5,9 +5,19 @@ import Header from './components/Header/Header';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadUser } from './slices/authSlice';
 
-const App = () => (
-  <BrowserRouter>
+function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser(null));
+  }, [dispatch]);
+
+  return (
+    <BrowserRouter>
     <Header/>
     <main>
       <Routes>
@@ -19,6 +29,7 @@ const App = () => (
     </main>
     <Footer/>
   </BrowserRouter>
-)
+  )
+}
 
 export default App;

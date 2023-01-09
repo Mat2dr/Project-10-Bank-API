@@ -3,20 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 //import store from './store';
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer, { loadUser } from './slices/authSlice';
+import authReducer from './slices/authSlice';
 
-const dispatch = useDispatch;
-
- const store = configureStore({
+const store = configureStore({
   reducer: {
     auth: authReducer,
   }
 }) 
 
-store.dispatch(loadUser(null));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
