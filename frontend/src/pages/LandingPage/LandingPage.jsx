@@ -1,10 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import iconChat from '../../img/icon-chat.png'
 import iconMoney from '../../img/icon-money.png'
 import iconSecurity from '../../img/icon-security.png'
 
 const LandingPage = () => {
+  const auth = useSelector((state) => state.auth)
+  console.log(auth);
+  
   return (
     <main>
       <div className="hero">

@@ -14,6 +14,7 @@ const App = () => (
         <Route path='/' element={<LandingPage />} exact/>
         <Route path='/login' element={<Login />} />
         <Route path='/Dashboard' element={<Dashboard />} />
+        <Route to='/not-found' /> 
       </Routes>
     </main>
     <Footer/>

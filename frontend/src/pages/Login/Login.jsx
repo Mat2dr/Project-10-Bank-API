@@ -2,31 +2,30 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate  } from 'react-router-dom'
 import ErrorMessage from '../../components/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userActions';
+import { loginUser } from '../../slices/authSlice';
 
 const Login = () => {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
   let navigate = useNavigate();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { error, userInfo} = userLogin
+  const auth =useSelector((state) => state.auth);
+  console.log(auth);
 
   useEffect(() => {
-    if(userInfo) {
-      navigate('/Dashboard');
+    if(auth._id) {
+      navigate("/Dasboard")
     }
-  }, [userInfo])
+  }, [auth._id, navigate]);
+
+   const [user, setUser] = useState({
+    email: '',
+    password: '',
+   });
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    dispatch(login(email,password))
-    console.log(email,password);
-  };
+    dispatch(loginUser(user));
+  }; 
 
 
   return (
@@ -37,18 +36,20 @@ const Login = () => {
         <form onSubmit={submitHandler}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
-            <input value={email} type="text" id="username" placeholder='Username' onChange={(e) => setEmail(e.target.value)}/>
+            <input type="text" id="username" placeholder='Username' onChange={ (e) => setUser({ ...user, email:e.target.value }) }/>
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input value={password} type="password" id="password" onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" id="password" onChange={ (e) => setUser({ ...user, password:e.target.value }) }/>
           </div>
-          { error && <ErrorMessage>{ error }</ErrorMessage> }
           <div className="input-remember">
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button type='submit' className="sign-in-button">Sign In</button>
+          <button type='submit' className="sign-in-button">
+            { auth.loginStatus === "pending" ? "Submitting" : "Sign In"}
+          </button>
+          {auth.loginStatus === 'rejected' ? (<p>{auth.loginError}</p>) : null }
         </form>
       </section>
     </main>
