@@ -1,13 +1,20 @@
-//import React, {useEffect} from 'react'
-//import { useSelector } from 'react-redux';
-// import { useNavigate  } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import { useSelector } from 'react-redux';
+import { useNavigate  } from 'react-router-dom'
 
 const Dashboard = () => {
+  const firstName = useSelector(state => state.auth.firstName);
+  const lastName = useSelector(state => state.auth.lastName);
+  const token = useSelector(state => state.auth.token);
+
+  console.log(firstName);
+  console.log(lastName);
+  console.log(token);
 
   return (
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
+        <h1>Welcome back<br />{lastName} {firstName}</h1>
         <button className="edit-button">Edit Name</button>
       </div>
       <h2 className="sr-only">Accounts</h2>

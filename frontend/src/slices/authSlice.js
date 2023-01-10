@@ -20,10 +20,27 @@ export const loginUser = createAsyncThunk(
                 email: values.email,
                 password: values.password,
             });
-            console.log(token.data.body.token)
 
             localStorage.setItem('token', JSON.stringify(token.data.body.token));
             return token.data.body.token
+        } catch (error) {
+            console.log(error.response.data);
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const getUser = createAsyncThunk("auth/getUser", async (token, { rejectWithValue }) => {
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            
+            const bodyParameters = {
+            key: "value"
+            };
+            const res = await axios.post(`http://localhost:3001/api/v1/user/profile`, bodyParameters, config);
+            return res;
         } catch (error) {
             console.log(error.response.data);
             return rejectWithValue(error.response.data);
@@ -52,7 +69,7 @@ const authSlice = createSlice({
             }
         },
         logoutUser(state, action){
-            localStorage.removeItem("token")
+            //localStorage.removeItem("token")
 
             return {
                 ...state,
@@ -71,20 +88,12 @@ const authSlice = createSlice({
             return { ...state, loginStatus: 'pending'};
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
-            console.log(action.payload);
-            console.log('1');
             if(action.payload) {
-                console.log('2');
                 const user = jwt_decode(action.payload);
-                console.log('3');
 
                 return {
                     ...state,
                     token: action.payload,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    _id: user._id,
                     loginStatus: 'success',
                 }
             } else return state
@@ -96,6 +105,17 @@ const authSlice = createSlice({
                  loginError: action.payload,
                 }
             });
+        builder.addCase(getUser.fulfilled, (state, action) => {
+            if(action.payload) {
+                return {
+                    ...state,
+                    _id: action.payload.data.body.id,
+                    email: action.payload.data.body.email,
+                    firstName: action.payload.data.body.firstName,
+                    lastName: action.payload.data.body.lastName,
+                }
+            } else return state
+        });
     }
 });
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate  } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../slices/authSlice';
+import { getUser, loginUser } from '../../slices/authSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,16 +15,18 @@ const Login = () => {
    });
 
    useEffect(() => {
-    if(auth._id) {
+    if(auth.token) {
       navigate("/Dashboard")
     }
-  }, [auth._id, navigate]); 
+  }, [auth.token, navigate]); 
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    console.log(user);
-    dispatch(loginUser(user));
+    const response = await dispatch(loginUser(user));
+    console.log(response.payload);
+    const request = await dispatch(getUser(response.payload));
+    console.log(request);
   }; 
 
 

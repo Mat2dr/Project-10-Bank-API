@@ -19,7 +19,7 @@ const Header = () => {
           </Link>
           <div>
             {
-              auth._id ? <LogoutBtn/> : <LoginBtn/>
+              auth.token ? <LogoutBtn/> : <LoginBtn/>
             }
           </div>
         </nav>

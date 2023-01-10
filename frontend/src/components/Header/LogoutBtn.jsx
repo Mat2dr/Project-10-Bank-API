@@ -4,12 +4,10 @@ import { useDispatch } from 'react-redux'
 import { logoutUser } from '../../slices/authSlice';
 
 const Logout = () => {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   return (
     <div>
-      <Link className="main-nav-item" to='/' onClick={() => {
-        dispatch(logoutUser(null))
-      }}>
+      <Link className="main-nav-item" to='/' onClick={ () =>  dispatch(logoutUser(null)) }>
           <i className="fa fa-user-circle"></i>Sign Out
       </Link>
   </div>

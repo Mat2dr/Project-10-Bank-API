@@ -5,13 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 //import store from './store';
+import thunk from 'redux-thunk'
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/authSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-  }
+  },
+  middleware: [thunk]
 }) 
 
 
