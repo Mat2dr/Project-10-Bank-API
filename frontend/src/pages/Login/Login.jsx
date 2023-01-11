@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate  } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, loginUser } from '../../slices/authSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,9 +33,9 @@ const Login = () => {
 
 
   return (
-    <main className="main bg-dark">
+    <main className="main bg-dark padding-15">
       <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"></i>
+        <FontAwesomeIcon icon={faCircleUser} />
         <h1>Sign In</h1>
         <form onSubmit={submitHandler}>
           <div className="input-wrapper">
