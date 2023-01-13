@@ -6,8 +6,6 @@ import iconMoney from '../../img/icon-money.png'
 import iconSecurity from '../../img/icon-security.png'
 
 const LandingPage = () => {
-  const auth = useSelector((state) => state.auth)
-  console.log(auth);
   
   return (
     <main>

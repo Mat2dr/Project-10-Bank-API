@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import HeroSection from './HeroSection';
 
 const Dashboard = () => {
+  let navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+
+
+  //Si il n'y a pas de user token dans le state: redirection Login
+  useEffect(() => {
+    if(token === '') {
+      navigate("/Login")
+    }
+  }, [token, navigate]); 
 
   return (
     <main className="main bg-dark padding-15">

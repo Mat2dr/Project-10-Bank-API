@@ -217,6 +217,15 @@ main {
   cursor: pointer;
 }
 
+.form-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .input-wrapper {
   display: flex;
   flex-direction: column;

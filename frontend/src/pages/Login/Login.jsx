@@ -9,7 +9,6 @@ const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const auth =useSelector((state) => state.auth);
-  console.log(auth);
 
   const [user, setUser] = useState({
     email: '',
@@ -26,9 +25,7 @@ const Login = () => {
     e.preventDefault();
 
     const response = await dispatch(loginUser(user));
-    console.log(response.payload);
     const request = await dispatch(getUser(response.payload));
-    console.log(request);
   }; 
 
 

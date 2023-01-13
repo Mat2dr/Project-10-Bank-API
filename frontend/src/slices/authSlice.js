@@ -48,6 +48,26 @@ export const getUser = createAsyncThunk("auth/getUser", async (token, { rejectWi
     }
 );
 
+export const modifyUser = createAsyncThunk("auth/modifyUser", async (values, { rejectWithValue }) => {
+    try {
+        const firstName = values.firstName;
+        const lastName = values.lastName;
+        const config = {
+            headers: { Authorization: `Bearer ${values.token}` }
+        };
+        
+        const res = await axios.put(`http://localhost:3001/api/v1/user/profile`, {
+            firstName,
+            lastName
+          }, config);
+        return res;
+    } catch (error) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data);
+    }
+}
+);
+
 
 const authSlice = createSlice({
     name: "auth",
@@ -111,6 +131,15 @@ const authSlice = createSlice({
                     ...state,
                     _id: action.payload.data.body.id,
                     email: action.payload.data.body.email,
+                    firstName: action.payload.data.body.firstName,
+                    lastName: action.payload.data.body.lastName,
+                }
+            } else return state
+        });
+        builder.addCase(modifyUser.fulfilled, (state, action) => {
+            if(action.payload) {
+                return {
+                    ...state,
                     firstName: action.payload.data.body.firstName,
                     lastName: action.payload.data.body.lastName,
                 }
