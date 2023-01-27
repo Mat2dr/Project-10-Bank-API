@@ -9,6 +9,7 @@ const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const auth =useSelector((state) => state.auth);
+  const errorMessage =useSelector((state) => state.auth.loginError);
 
   const [user, setUser] = useState({
     email: '',
@@ -37,12 +38,16 @@ const Login = () => {
         <form onSubmit={submitHandler}>
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>
-            <input type="text" id="email" placeholder='email' onChange={ (e) => setUser({ ...user, email:e.target.value }) }/>
+            <input type="email" id="email" placeholder='email' onChange={ (e) => setUser({ ...user, email:e.target.value }) } required/>
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={ (e) => setUser({ ...user, password:e.target.value }) }/>
+            <input type="password" id="password" onChange={ (e) => setUser({ ...user, password:e.target.value }) } required/>
           </div>
+          {
+            errorMessage === '' ? null : <p className='errorMessage'>{errorMessage.message}</p>
+          }
+          
           <div className="input-remember">
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>

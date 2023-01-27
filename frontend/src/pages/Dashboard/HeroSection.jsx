@@ -40,11 +40,11 @@ const HeroSection = () => {
                 <form onSubmit={submitHandlerModify}>
                     <div className='form-wrapper'>
                         <div className="input-wrapper">
-                            <label htmlFor="firstNameUpdate">FirstName</label>
+                            <label htmlFor="firstNameUpdate">First name</label>
                             <input type="text" id="firstNameUpdate" placeholder={firstName} onChange={ (e) => setUpdatedUser({ ...updatedUser, firstName:e.target.value }) }/>
                         </div>
                         <div className="input-wrapper">
-                            <label htmlFor="lastNameUpdate">LastName</label>
+                            <label htmlFor="lastNameUpdate">Last name</label>
                             <input type="text" id="lastNameUpdate" placeholder={lastName} onChange={ (e) => setUpdatedUser({ ...updatedUser, lastName:e.target.value }) }/>
                         </div>
                     </div>

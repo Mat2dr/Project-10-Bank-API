@@ -339,3 +339,8 @@ main {
 .padding-15 {
   padding: 15px;
 }
+
+.errorMessage {
+  color: red;
+  font-weight: bold;
+}
